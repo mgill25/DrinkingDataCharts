@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sortable Bar Chart</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="onepage-scroll.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Scripts -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="jquery.onepage-scroll.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+  <div class="main">
+    
+    <section id="price-section">
+        <div class="buttons">
+            <button class="pure-button" id="pi-button">Price Index</button>
+            <button class="pure-button" id="beer-button">Beer</button>
+            <button class="pure-button" id="wine-button">Wine</button>
+            <input type="checkbox"> Sort</input>
+        </div>
+    </section>
+
+    <section id="booze-section">
+        <div class="buttons">
+            <button class="pure-button" id="ge_one-button"> >1 drink in past 30 days </button>
+            <button class="pure-button" id="bingers-button">Binge drinkers</button>
+            <button class="pure-button" id="heavy-button">Heavy drinkers</button>
+            <button class="pure-button" id="di-button">Drinkers Index</button>
+            <input type="checkbox"> Sort</input>
+        </div>
+    </section>
+
+    <section id="liquor-section">
+        <div class="buttons">
+            <button class="pure-button" id="shops-button"> Liquor Shops </button>
+            <button class="pure-button" id="places-button">Drinking Places</button>
+            <button class="pure-button" id="shops_pc-button">Shops per Capita</button>
+            <button class="pure-button" id="places_pc-button">Drinking Places per Capita</button>
+            <button class="pure-button" id="ai-button">Accessibility Index</button>
+            <input type="checkbox"> Sort</input>
+        </div>
+    </section>
+  </div>
+
+</body>
+</html>
