@@ -1,0 +1,97 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 100%;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+.bar:hover {
+  opacity: 0.3;
+}
+
+.x.axis path {
+  display: none;
+}
+
+label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* D3-Tip */
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.heading {
+  font: 300 40px Helvetica Neue;
+  font-weight: lighter;
+  fill: #666;
+  margin-right: 30px;
+}
+
+.title {
+  font: 300 30px Helvetica Neue;
+  font-weight: lighter;
+  margin-top: 20px;
+  margin-right: 30px;
+  fill: #666;
+}
+.pushDown {
+  margin-top: 600px;
+}
+
+h2, h3 {
+  color: grey;
+  font-weight: lighter;
+  text-anchor: middle;
+}
+
+.buttons {
+  display: block;
+  vertical-align: super;
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 100px;
+}
