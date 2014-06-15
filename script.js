@@ -45,7 +45,7 @@ $(function() {
     } else if (metricType === "ge_one") {
       return "> 1 Drink";
     } else if (metricType === "shops") {
-      return "Liquor Shops";
+      return "Number of Liquor Shops";
     } else if (metricType === "bingers") {
       return "Binge Drinkers";
     } else if (metricType === "heavy") {
@@ -60,7 +60,7 @@ $(function() {
     var svg = d3.select("body")
                 .select("#" + sectionType + "-section")
                 .append("svg")
-                .attr("width", width + margin.left + margin.right + 200)
+                .attr("width", width + margin.left + margin.right + 400)
                 .attr("height", height + margin.top + margin.bottom)
                 .attr("class", sectionType)
                 .attr("id", elementName)
@@ -74,7 +74,7 @@ $(function() {
       .attr("id", elementName + "-title")
       .attr("dy", "1.20em")
       .attr("text-anchor", "middle")
-      .attr("transform", "translate("+ (width + 60) +",0)")
+      .attr("transform", "translate("+ (width + 200) +"," + ((height/3) + 30) + ")")
       .text(titleText.charAt(0).toUpperCase() + titleText.slice(1))
 
     return svg;
@@ -105,9 +105,23 @@ $(function() {
         .attr("class", "heading")
         .attr("dy", ".10em")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (width + 30) +",0)")  // centre below axis
+        .attr("transform", "translate("+ (width + 200) +"," + (height/3) + ")")  // centre below axis
         .text(headingText.charAt(0).toUpperCase() + headingText.slice(1))
 
+
+    var rectangle = svg.append("rect")
+        .attr("class", "rectangle")
+        .attr("x", 10)
+        .attr("y", 10)
+        .attr("width", 20)
+        .attr("height", 10)
+        .style({"fill": "FireBrick"})
+        // .style({"width": "20px", "height": "10px", "background": "FireBrick"})
+        .attr("transform", "translate(" + (width + 150) + "," + (height - 10) + ")")
+      
+    var label = svg.append("text")
+        .attr("transform", "translate(" + (width + 200) + "," + (height + 10) + ")")
+        .text("Denver");
 
     // Setup the tooltip
     var prefix;
@@ -233,7 +247,6 @@ $(function() {
         .attr("x", function(d) { return x(d.city); })
         .attr("width", x.rangeBand())
         .attr("y", function(d) {
-          // console.log('metricType: ' + metricType + ' value: ' + d[metricType]);
           return y(d[metricType]);
         })
         .attr("height", function(d) {
@@ -280,9 +293,8 @@ $(function() {
       var yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(yTickFormat);
 
       // Re-adjust the Y-axis 
-      svg.selectAll("rect")
+      svg.selectAll(".bar")
         .attr("y", function(d) {
-            // console.log('updating y to: ' + (height - y(d[metricType])));
             return y(d[metricType]);
           })
         .attr("height", function(d) {
