@@ -1,7 +1,10 @@
 body {
+  background: url('booze_black_overlay.jpg') no-repeat center left;
+  background-size: 100% 100%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .axis text {
@@ -11,12 +14,12 @@ body {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: white;
   shape-rendering: crispEdges;
 }
 
 .bar {
-  fill: steelblue;
+  fill: #CEE8EF;
   fill-opacity: .9;
 }
 
@@ -94,4 +97,41 @@ h2, h3 {
   text-align: left;
   margin-top: 10px;
   margin-left: 100px;
+}
+
+.links {
+  float: left;
+  color: white;
+}
+
+p { color: white; }
+
+#heading {
+  font-family: PalatinoLinotype-Bold;
+  font-size: 28px;
+  margin-left: 50px;
+}
+
+.smalltext {
+  font-family: ITCSymbolStd-Book;
+  font-size: 12px;
+  width: 220px;
+  margin-left: 50px;
+}
+
+text {
+  fill: white;
+}
+
+#price, #booze, #liquor {
+  font-family: PalatinoLinotype-Bold;
+}
+.clickable {
+  font-family: Source Sans Pro;
+}
+
+.sources {
+  font-size: 12px;
+  width: 220px;
+  margin-left: 50px;
 }

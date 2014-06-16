@@ -1,7 +1,7 @@
 $(function() {
-  var margin = {top: 75, right: 40, bottom: 140, left: 90},
-      width = 970 - margin.left - margin.right,
-      height = 695 - margin.top - margin.bottom;
+  var margin = {top: 10, right: 80, bottom: 440, left: 290},
+      width = 870 - margin.left - margin.right + 250,
+      height = 895 - margin.top - margin.bottom;
 
   var percentFormat = d3.format("0.%");       // TODO
   var dollarFormat = d3.format("$");
@@ -21,12 +21,7 @@ $(function() {
       .orient("left")
       .tickFormat(dollarFormat);
 
-  var sortTimeout;
-
-  // Append a heading
-  /* d3.select("body").append("h3")
-    .text("Alcohol Price - lower is better")
-    .style("font-weight", "normal"); */
+  var toggle, sortTimeout;
 
   function getMetricName(metricType) {
     // Return the full metric name for display
@@ -58,25 +53,26 @@ $(function() {
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var svg = d3.select("body")
-                .select("#" + sectionType + "-section")
+                .select("section")
                 .append("svg")
-                .attr("width", width + margin.left + margin.right + 400)
-                .attr("height", height + margin.top + margin.bottom)
+                .attr("width", width + margin.left + margin.right - 100)
+                .attr("height", height + margin.top + margin.bottom + 100)
                 .attr("class", sectionType)
                 .attr("id", elementName)
                 .append("g")
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var titleText = getMetricName(elementName);
+    /*
     // Metric Title
+    var titleText = getMetricName(elementName);
     svg.append("text")
       .attr("class", "title")
       .attr("id", elementName + "-title")
       .attr("dy", "1.20em")
       .attr("text-anchor", "middle")
-      .attr("transform", "translate("+ (width + 200) +"," + ((height/3) + 30) + ")")
+      .attr("transform", "translate("+ (width + 20) +"," + ((height/3) + 30) + ")")
       .text(titleText.charAt(0).toUpperCase() + titleText.slice(1))
-
+    */
     return svg;
   }
 
@@ -101,13 +97,14 @@ $(function() {
       headingText = "Liquor Shops";
     }
 
+    /*
     var mainTitle = svg.append("text")
         .attr("class", "heading")
         .attr("dy", ".10em")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (width + 200) +"," + (height/3) + ")")  // centre below axis
+        .attr("transform", "translate("+ (width + 20) +"," + (height/3) + ")")  // centre below axis
         .text(headingText.charAt(0).toUpperCase() + headingText.slice(1))
-
+    */
 
     var rectangle = svg.append("rect")
         .attr("class", "rectangle")
@@ -115,13 +112,14 @@ $(function() {
         .attr("y", 10)
         .attr("width", 20)
         .attr("height", 10)
-        .style({"fill": "FireBrick"})
+        .style({"fill": "#2E86A5"})
         // .style({"width": "20px", "height": "10px", "background": "FireBrick"})
-        .attr("transform", "translate(" + (width + 150) + "," + (height - 10) + ")")
+        .attr("transform", "translate(" + (width/2 - 40) + "," + (height + 180) + ")")
       
     var label = svg.append("text")
-        .attr("transform", "translate(" + (width + 200) + "," + (height + 10) + ")")
-        .text("Denver");
+        .attr("transform", "translate(" + (width/2) + "," + (height + 200) + ")")
+        .text("Denver")
+        .style({"color": "white"});
 
     // Setup the tooltip
     var prefix;
@@ -159,26 +157,27 @@ $(function() {
     });
 
     // *** Update Transition Functions *** //
+    /*
     function sortUpdate(sectionType) {
       sortTimeout = setTimeout(function() {
-        d3.select("#" + sectionType + "-section")
-          .select("input").property("checked", true).each(change);
-      }, 1000);
+        d3.select("input").property("checked", true).each(change);
+      }, 500);
     }
+    */
 
-    function change() {
+    function change(toggle) {
       // clearTimeout(sortTimeout);     // We're no longer using the setTimeout way
 
       // Copy-on-write since tweens are evaluated after a delay.
-      var x0 = x.domain(data.sort(this.checked
+      var x0 = x.domain(data.sort(toggle
           ? function(a, b) { return b[metricType] - a[metricType]; }
           : function(a, b) { return d3.ascending(a.city, b.city); })
           .map(function(d) { return d.city; }))
           .copy();
 
       // Sorting transition
-      var transition = svg.transition().duration(200),
-          delay = function(d, i) { return i * 50; };
+      var transition = svg.transition().duration(50),
+          delay = function(d, i) { return i * 25; };
 
       transition.selectAll(".bar")
           .delay(delay)
@@ -202,14 +201,14 @@ $(function() {
         // Rotate the x-axis text labels, so they don't look crowded
         .selectAll("text")
               .style("text-anchor", "end")
-              .style("font-weight", "bold")
+              .style("font-weight", "normal")
               // Will have to fiddle with these settings a bit!
-              .attr("dx", "-.8em")
-              .attr("dy", ".005em")
+              .attr("dx", "-0.8em")
+              .attr("dy", "0.5em")
               .attr("transform", function(d) {
                 // first move the text left so no longer centered on the tick
                 // then rotate up to get 45 degrees
-                return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height*+1.6 + ")" + "rotate(-45)"
+                return "translate(" + this.getBBox().height * -2.7 + "," + this.getBBox().height* + 1.7 + ")" + "rotate(-45)"
               })
 
     yAxis.tickFormat(yTickFormat);
@@ -217,7 +216,8 @@ $(function() {
     svg.append("text")
       .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
       .attr("transform", "translate("+ (width/2) +","+(height + 100)+")")  // centre below axis
-      .text("States");
+      .text("States")
+      .style({"color": "white"});
 
     svg.append("g")
         .attr("class", "y axis")
@@ -238,7 +238,8 @@ $(function() {
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate(-45" +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-        .text(yLabelText);
+        .text(yLabelText)
+        .style({"color": "white"});
 
     svg.selectAll(".bar")
         .data(data)
@@ -255,34 +256,37 @@ $(function() {
         .attr("style", function(d) {
           // highlight Denver
           if (d.city === "Denver") {
-            return "fill: FireBrick";
+            return "fill: #2E86A5";
           }
         })
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide);
+    change(true);
 
-    d3.select("#" + sectionType + "-section input").on("change", change);
-
-    d3.select("#" + sectionType + "-section").selectAll("button").on("click", function() {
-      if (d3.event.defaultPrevented) { 
+    d3.selectAll(".clickable").on("click", function() {
+      // Make sure all items are normal weight at the beginning
+      d3.selectAll("li").style({"font-weight": "normal"});
+      if (d3.event.defaultPrevented) {
         console.log("Click Supressed!!!");
         return;
       } else {
         metricType = this.id.split("-")[0];
+        // Now make the selection bold!
+        d3.select(this).style({"font-weight": "bold"}); 
         updateChart(metricType, data);
       }
     });
 
     // Update function that performs the animated transition.
     function updateChart(metricType, data) {
-      // Ensure sort is false when switching
-      d3.selectAll("#" + sectionType + "-section").select("input").property("checked", false);
 
       // Update text
+      /*
       var titleText = getMetricName(metricType);
-      d3.select("#" + sectionType + "-section")
+      d3.select("section")
         .select(".title")
         .text(titleText.charAt(0).toUpperCase() + titleText.slice(1));
+      */
 
       // Update the domain based on the new metric.
       y.domain([0, d3.max(data, function(d) {
@@ -302,7 +306,7 @@ $(function() {
           return height - y(d[metricType]);
         })
 
-      var transition = svg.transition().duration(750);
+      var transition = svg.transition().duration(350);
 
       transition.selectAll(".bar")
           .attr("y", function(d) { return y(d[metricType]); });
@@ -311,47 +315,21 @@ $(function() {
           .call(yAxis);
    
       // Call update transitions 
-      d3.select("#" + sectionType + "-section input").on("change", change);
+      // Ensure sort is false when switching
+      toggle = true;
+      change(toggle);
     }
   }
 
   // Create the SVG Elements
   var section1 = createSVGElement("pi", "price");
-  var section2 = createSVGElement("ge_one", "booze");
-  var section3 = createSVGElement("shops", "liquor");
+  // var section2 = createSVGElement("ge_one", "booze");
+  // var section3 = createSVGElement("shops", "liquor");
 
   // Load the data and render the charts.
   d3.csv("booze.csv", function(error, data) {
     renderData(data, section1, "pi", "price");
-    renderData(data, section2, "ge_one", "booze");
-    renderData(data, section3, "shops", "liquor");
+    // renderData(data, section2, "ge_one", "booze");
+    // renderData(data, section3, "shops", "liquor");
   });
-
-
-  // Onepage Scroll!
-  $(".main").onepage_scroll({
-    sectionContainer: "section",     // sectionContainer accepts any kind of selector in case you don't want to use section
-    easing: "ease",                  // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in", 
-                                    // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
-    animationTime: 1000,             // AnimationTime let you define how long each section takes to animate
-    pagination: true,                // You can either show or hide the pagination. Toggle true for show, false for hide.
-    updateURL: false,                // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
-    beforeMove: function(index) {},  // This option accepts a callback function. The function will be called before the page moves.
-    afterMove: function(index) {},   // This option accepts a callback function. The function will be called after the page moves.
-    loop: false,                     // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
-    keyboard: true,                  // You can activate the keyboard controls
-    responsiveFallback: false,        // You can fallback to normal page scroll by defining the width of the browser in which
-                                      // you want the responsive fallback to be triggered. For example, set this to 600 and whenever 
-                                      // the browser's width is less than 600, the fallback will kick in.
-    direction: "vertical"            // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".  
-  });
-  
-  // Toggle Show/Hide using jQuery.
-  // $('.wine').hide();
-  // $('#beer-button').click(function() {
-  //   $('.beer').toggle()
-  // })
-  // $('#wine-button').click(function() {
-  //   $('.wine').toggle()
-  // })
 })

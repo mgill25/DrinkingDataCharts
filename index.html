@@ -20,36 +20,53 @@
 <body>
 
   <div class="main">
-    
-    <section id="price-section">
-        <div class="buttons">
-            <button class="pure-button" id="pi-button">Price Index</button>
-            <button class="pure-button" id="beer-button">Beer</button>
-            <button class="pure-button" id="wine-button">Wine</button>
-            <input type="checkbox"> Sort</input>
-        </div>
-    </section>
+    <div id="head-col">
+      <p id="heading">Is Denver America's Drinking Paradise?</p>
+    </div>
 
-    <section id="booze-section">
-        <div class="buttons">
-            <button class="pure-button" id="ge_one-button"> >1 drink in past 30 days </button>
-            <button class="pure-button" id="bingers-button">Binge drinkers</button>
-            <button class="pure-button" id="heavy-button">Heavy drinkers</button>
-            <button class="pure-button" id="di-button">Drinkers Index</button>
-            <input type="checkbox"> Sort</input>
-        </div>
-    </section>
+    <div class="links"> 
+      <ul>
+        <li id="price">Alcohol Prices</li>
+          <ul>
+            <li class="clickable" id="pi-button">Price Index</li>
+            <li class="clickable" id="beer-li">Beer</li>
+            <li class="clickable" id="wine-li">Wine</li>
+          </ul>
+        </li>
 
-    <section id="liquor-section">
-        <div class="buttons">
-            <button class="pure-button" id="shops-button"> Liquor Shops </button>
-            <button class="pure-button" id="places-button">Drinking Places</button>
-            <button class="pure-button" id="shops_pc-button">Shops per Capita</button>
-            <button class="pure-button" id="places_pc-button">Drinking Places per Capita</button>
-            <button class="pure-button" id="ai-button">Accessibility Index</button>
-            <input type="checkbox"> Sort</input>
-        </div>
+        <li id="booze">Booze Culture</li>
+          <ul>
+            <li class="clickable" id="ge_one-li"> >1 drink in past 30 days </li>
+            <li class="clickable" id="bingers-li">Binge drinkers</li>
+            <li class="clickable" id="heavy-li">Heavy drinkers</li>
+            <li class="clickable" id="di-li">Drinkers Index</li>
+          </ul>
+        </li>
+
+        <li id="liquor">Liquor Shops</li>
+          <ul>
+            <li class="clickable" id="shops-li"> Liquor Shops </li>
+            <li class="clickable" id="places-li">Drinking Places</li>
+            <li class="clickable" id="shops_pc-li">Shops per Capita</li>
+            <li class="clickable" id="places_pc-li">Drinking Places per Capita</li>
+            <li class="clickable" id="ai-li">Accessibility Index</li>
+          </ul>
+        </li>
+      </ul>
+
+    <p class="sources">Sources:</p>
+    <ul class="sources">
+      <li>Cost of Living Index, Council of Community and Economic Research, 2013</li>
+      <li>Business Patterns, US Census Bureau, 2012</li>
+      <li>Behavioral Risk Factor Surveillance System, Center for Disease Control, 2010</li>
+    </ul>
+
+    </div>
+
+    <section id="chart-section">
     </section>
+  
+
   </div>
 
 </body>
