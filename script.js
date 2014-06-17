@@ -56,33 +56,19 @@ $(function() {
 
   var toggle, sortTimeout;
 
-  function getMetricName(metricType) {
-    // Return the full metric name for display
-    if (metricType === "pi") {
-      return "Price Index";
-    } else if (metricType === "di") {
-      return "Drinkers Index";
-    } else if (metricType === "ai") {
-      return "Accessibility Index";
-    } else if (metricType === "places_pc") {
-      return "Drinking Places (per capita)";
-    } else if (metricType === "places") {
-      return  "Drinking Places";
-    } else if (metricType === "shops_pc") {
-      return "Liquor Shops (per capita)";
-    } else if (metricType === "ge_one") {
-      return "> 1 Drink";
-    } else if (metricType === "shops") {
-      return "Number of Liquor Shops";
-    } else if (metricType === "bingers") {
-      return "Binge Drinkers";
-    } else if (metricType === "heavy") {
-      return "Heavy Drinkers";
-    } else {
-      return metricType;
-    }
+  var metricNameMap = {
+      "pi": "Price Index",
+      "di": "Drinkers Index",
+      "ai": "Accessibility Index",
+      "places_pc": "Drinking Places (per capita)",
+      "places": "Drinking Places",
+      "shops_pc": "Liquor Shops (per capita)",
+      "ge_one": "> 1 Drink",
+      "shops": "Number of Liqour Shops",
+      "bingers": "Binge Drinkers",
+      "heavy": "Heavy Drinkers"
   }
- 
+
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var totalWidth = width + margin.left + margin.right
