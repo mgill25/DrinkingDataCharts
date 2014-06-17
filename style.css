@@ -4,6 +4,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -99,10 +100,22 @@ h2, h3 {
   margin-left: 100px;
 }
 
-.links {
-  float: left;
-  color: white;
-  width: 270px;
+@media (max-height: 743px) {
+  .links {
+    float: left;
+    color: white;
+    width: 200px;
+    height: 500px;
+  }
+}
+
+@media (min-height: 744px) {
+  .links {
+    float: left;
+    color: white;
+    width: 270px;
+  }
+
 }
 
 p { color: white; }
@@ -126,24 +139,59 @@ text {
   fill: white;
 }
 
-.price, .booze, .liquor {
+@media (min-height: 744px) {
+  .clickable {
+    font-family: Source Sans Pro;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    font-weight: 100;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .price, .booze, .liquor {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 100;
   font-size: 19px;
+  }
+
 }
 
-.clickable {
-  font-family: Source Sans Pro;
-  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+@media (max-height: 743px) {
+  .clickable {
+    font-family: Source Sans Pro;
+    font-weight: 100;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .price, .booze, .liquor {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 100;
-  font-size: 17px;
-  cursor: pointer;
+  font-size: 14px;
+  }
+
+  .sources {
+    font-size: 12px;
+    width: 200px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  
 }
 
-.sources {
-  font-size: 12px;
-  width: 220px;
-  margin-left: 50px;
+@media (min-width: 1281px) {
+  .sources {
+    font-size: 12px;
+    width: 220px;
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .sources {
+    font-size: 12px;
+    width: 220px;
+    margin-left: 50px;
+  }  
 }
 
 ul {

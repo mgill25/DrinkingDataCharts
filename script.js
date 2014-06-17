@@ -1,13 +1,23 @@
 $(function() {
-  var margin = {top: 10, right: 80, bottom: 440, left: 250},
+  var margin = {top: 10, right: 80, bottom: 140, left: 250},
       sectionWidth = $("#chart-section").width(),
+      sectionHeight = $("#chart-section").height(),
       width = sectionWidth - margin.left - margin.right - 270,
-      height = 895 - margin.top - margin.bottom;
+      height = sectionHeight - margin.top - margin.bottom;      // 895
 
   // console.log("sectionWidth: " + sectionWidth);
   // console.log("oldwidth: " + width);
 
   // Ugly hack.
+  // Adjust graph height based on different section widths
+  var windowHeight = $(window).height();
+  if (windowHeight <= 612) {
+    console.log("Yes it is");
+    height = height + 500;
+  } else {
+    height = height + 600;
+  }
+
   // Adjust graph width based on different section widths
   if (sectionWidth < 1300 && sectionWidth > 1024) {
     margin.left = margin.left - 100;
@@ -19,6 +29,8 @@ $(function() {
     width = width - 150;
   }
   // console.log("new width: " + width);
+  console.log("new ht: " + height);
+
 
   var percentFormat = d3.format(".0%");       // TODO
   var dollarFormat = d3.format("$");
@@ -74,7 +86,7 @@ $(function() {
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var totalWidth = width + margin.left + margin.right
-      , totalHeight = height + margin.top + margin.bottom + 100
+      , totalHeight = height + margin.top + margin.bottom + 400
       , transformWidth = margin.left + 100;
 
     var svg = d3.select("body")
@@ -351,7 +363,6 @@ $(function() {
       margin.left = 100;
       margin.right = 20;
       d3.select(chart.node().parentNode)
-        // .style('height', (x.rangeExtent()[1] + margin.top + margin.bottom) + 'px')
         .style('width', (targetWidth + margin.left + margin.right) + 'px');
 
       // update axes
