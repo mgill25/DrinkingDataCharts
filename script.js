@@ -22,6 +22,7 @@ $(function() {
 
   var percentFormat = d3.format(".0%");       // TODO
   var dollarFormat = d3.format("$");
+  var prefix, postfix = "";
   
   var yLabelText
     , yTickFormat = dollarFormat;         // default is $
@@ -119,17 +120,11 @@ $(function() {
         .style({"color": "white"});
 
     // Setup the tooltip
-    var prefix;
     var tip = d3.tip()
       .attr("class", "d3-tip")
       .offset([-10, 0])
       .html(function(d) {
-        if (sectionType === "price") {
-          prefix = "$";
-        } else {
-          prefix = "";
-        }
-        return "<strong>" + d.city + "</strong> <span style='color:aliceblue'>" + prefix + d[metricType] + "</span>";
+        return "<strong>" + d.city + "</strong> <span style='color:aliceblue'>" + prefix + d[metricType] + postfix + "</span>";
       })
 
     svg.call(tip);
@@ -250,15 +245,20 @@ $(function() {
       if (d3.select(this).node().parentNode.className === "price") {
         yTickFormat = dollarFormat;
         yLabelText = "Price";
+        prefix = "$";
+        postfix = "";
       } else if (d3.select(this).attr("class") === "clickable percentage") {
         yTickFormat = function(d) {
           return parseInt(d, 10) + "%";
         };
         yLabelText = this.innerText;
+        prefix = "";
+        postfix = "%";
       } else {
         yTickFormat = d3.format("");
         yLabelText = this.innerText;
-        // yLabelText = "";
+        prefix = "";
+        postfix = "";
       }
       d3.select("#yLabelText").text(yLabelText).style({"font-weight": "normal", "font-family": "Source Sans Pro"});
 
