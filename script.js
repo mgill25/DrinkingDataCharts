@@ -1,7 +1,24 @@
 $(function() {
-  var margin = {top: 10, right: 80, bottom: 440, left: 290},
-      width = 870 - margin.left - margin.right + 250,
+  var margin = {top: 10, right: 80, bottom: 440, left: 250},
+      sectionWidth = $("#chart-section").width(),
+      width = sectionWidth - margin.left - margin.right - 270,
       height = 895 - margin.top - margin.bottom;
+
+  // console.log("sectionWidth: " + sectionWidth);
+  // console.log("oldwidth: " + width);
+
+  // Ugly hack.
+  // Adjust graph width based on different section widths
+  if (sectionWidth < 1250 && sectionWidth > 1024) {
+    margin.left = margin.left - 100;
+    width = width + 50;
+  } else if (sectionWidth <= 1024) {
+    margin.left = margin.left - 150;
+    width = width + 100;
+  } else {
+    width = width - 150;
+  }
+  // console.log("new width: " + width);
 
   var percentFormat = d3.format("0.%");       // TODO
   var dollarFormat = d3.format("$");
@@ -52,27 +69,22 @@ $(function() {
  
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
+    var totalWidth = width + margin.left + margin.right
+      , totalHeight = height + margin.top + margin.bottom + 100
+      , transformWidth = margin.left + 100;
+
     var svg = d3.select("body")
                 .select("section")
                 .append("svg")
-                .attr("width", width + margin.left + margin.right - 100)
-                .attr("height", height + margin.top + margin.bottom + 100)
+                .attr("width", totalWidth)
+                .attr("height", totalHeight)
+                .attr("viewbox", "0 0 " + totalWidth + " " + totalHeight)
+                .attr("preserveAspectRatio", "xMidYMid")
                 .attr("class", sectionType)
                 .attr("id", elementName)
                 .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                  .attr("transform", "translate(" + transformWidth + "," + margin.top + ")");
 
-    /*
-    // Metric Title
-    var titleText = getMetricName(elementName);
-    svg.append("text")
-      .attr("class", "title")
-      .attr("id", elementName + "-title")
-      .attr("dy", "1.20em")
-      .attr("text-anchor", "middle")
-      .attr("transform", "translate("+ (width + 20) +"," + ((height/3) + 30) + ")")
-      .text(titleText.charAt(0).toUpperCase() + titleText.slice(1))
-    */
     return svg;
   }
 
@@ -97,23 +109,14 @@ $(function() {
       headingText = "Liquor Shops";
     }
 
-    /*
-    var mainTitle = svg.append("text")
-        .attr("class", "heading")
-        .attr("dy", ".10em")
-        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (width + 20) +"," + (height/3) + ")")  // centre below axis
-        .text(headingText.charAt(0).toUpperCase() + headingText.slice(1))
-    */
-
+    // Denver label Stuff
     var rectangle = svg.append("rect")
         .attr("class", "rectangle")
         .attr("x", 10)
         .attr("y", 10)
-        .attr("width", 20)
+        .attr("width", 15)
         .attr("height", 10)
         .style({"fill": "#2E86A5"})
-        // .style({"width": "20px", "height": "10px", "background": "FireBrick"})
         .attr("transform", "translate(" + (width/2 - 40) + "," + (height + 180) + ")")
       
     var label = svg.append("text")
@@ -137,6 +140,7 @@ $(function() {
 
     svg.call(tip);
 
+    // Get the data
     data.forEach(function(d) {
       d.city = d.city;
       // Price
@@ -157,17 +161,8 @@ $(function() {
     });
 
     // *** Update Transition Functions *** //
-    /*
-    function sortUpdate(sectionType) {
-      sortTimeout = setTimeout(function() {
-        d3.select("input").property("checked", true).each(change);
-      }, 500);
-    }
-    */
 
     function change(toggle) {
-      // clearTimeout(sortTimeout);     // We're no longer using the setTimeout way
-
       // Copy-on-write since tweens are evaluated after a delay.
       var x0 = x.domain(data.sort(toggle
           ? function(a, b) { return b[metricType] - a[metricType]; }
@@ -223,24 +218,13 @@ $(function() {
         .attr("class", "y axis")
         .call(yAxis)
 
-      /*
-      .append("text")
-        .attr("class", "y label")
-        // .attr("transform", "rotate(-90)")
-        .attr("y", 0)
-        .attr("dy", "-5px")
-        .attr("text-anchor", "end")
-        .text("Price")
-        .style({"font-size": "15px"}); */
-
-    
-
     svg.append("text")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate(-45" +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
         .text(yLabelText)
         .style({"color": "white"});
 
+    // Bars of the chart!
     svg.selectAll(".bar")
         .data(data)
       .enter().append("rect")
@@ -263,6 +247,7 @@ $(function() {
         .on("mouseout", tip.hide);
     change(true);
 
+    // Update chart on click
     d3.selectAll(".clickable").on("click", function() {
       // Make sure all items are normal weight at the beginning
       d3.selectAll("li").style({"font-weight": "normal"});
@@ -277,16 +262,9 @@ $(function() {
       }
     });
 
+
     // Update function that performs the animated transition.
     function updateChart(metricType, data) {
-
-      // Update text
-      /*
-      var titleText = getMetricName(metricType);
-      d3.select("section")
-        .select(".title")
-        .text(titleText.charAt(0).toUpperCase() + titleText.slice(1));
-      */
 
       // Update the domain based on the new metric.
       y.domain([0, d3.max(data, function(d) {
@@ -323,13 +301,53 @@ $(function() {
 
   // Create the SVG Elements
   var section1 = createSVGElement("pi", "price");
-  // var section2 = createSVGElement("ge_one", "booze");
-  // var section3 = createSVGElement("shops", "liquor");
 
   // Load the data and render the charts.
   d3.csv("booze.csv", function(error, data) {
     renderData(data, section1, "pi", "price");
-    // renderData(data, section2, "ge_one", "booze");
-    // renderData(data, section3, "shops", "liquor");
+
+    /******************************/
+    // SVG Responsive Stuff
+    // Ref: http://stackoverflow.com/a/9539361/850898 
+    var chart = $("svg")
+      , aspect = chart.width() / chart.height()
+      , container = chart.parent();
+
+    var chart = d3.select("svg");
+
+    function resize() {
+      // var targetWidth = container.width();
+      var barWidth = 12                         // Like it was in default.
+        , yLabelWidth = 20
+        , yAxisWidth = 50
+        , yBuffer = 100;
+
+      console.log(x.rangeBand());
+
+      var targetWidth = (barWidth * 50) + yLabelWidth + yAxisWidth + yBuffer;
+      console.log("Target width: " + targetWidth);
+
+      d3.select("svg")
+        .attr("width", targetWidth);
+
+      chart.attr("height", Math.round(targetWidth / aspect));
+
+      // Resize the scale
+      x.range([0, width]);
+
+      // Resize ALL the things!
+      margin.left = 100;
+      margin.right = 20;
+      d3.select(chart.node().parentNode)
+        // .style('height', (x.rangeExtent()[1] + margin.top + margin.bottom) + 'px')
+        .style('width', (targetWidth + margin.left + margin.right) + 'px');
+
+      // update axes
+      chart.select('.x.axis.top').call(xAxis.orient('top'));
+      chart.select('.x.axis.bottom').call(xAxis.orient('bottom'));
+    }
+
+    // d3.select(window).on("resize", resize);
+
   });
 })
