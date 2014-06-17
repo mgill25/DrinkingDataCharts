@@ -9,7 +9,7 @@ $(function() {
 
   // Ugly hack.
   // Adjust graph width based on different section widths
-  if (sectionWidth < 1250 && sectionWidth > 1024) {
+  if (sectionWidth < 1300 && sectionWidth > 1024) {
     margin.left = margin.left - 100;
     width = width + 50;
   } else if (sectionWidth <= 1024) {
@@ -22,7 +22,7 @@ $(function() {
 
   var percentFormat = d3.format(".0%");       // TODO
   var dollarFormat = d3.format("$");
-  var prefix, postfix = "";
+  var prefix = "$", postfix = "";
   
   var yLabelText
     , yTickFormat = dollarFormat;         // default is $

@@ -145,3 +145,11 @@ text {
   width: 220px;
   margin-left: 50px;
 }
+
+ul {
+  list-style-type: none;
+}
+
+ul ul {
+  margin-left: 0px;
+}
