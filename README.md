@@ -1,10 +1,12 @@
 DrinkingDataCharts
 ==================
 
-D3.js visualisations of Drinking data of some US cities.
+A tiny d3.js visualisation that I've been messing around with.
+Interactive, sorted drinking data of some US cities.
 
-Uses:
+Click [here](http://manishgill.com/DrinkingDataCharts) to see it in action!
+
+Dependencies:
   1. d3.js
   2. d3-tip.js
-  3. one-scroll.js
-  4. jQuery
+  3. jQuery
