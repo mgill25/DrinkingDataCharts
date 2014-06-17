@@ -20,8 +20,11 @@ $(function() {
   }
   // console.log("new width: " + width);
 
-  var percentFormat = d3.format("0.%");       // TODO
+  var percentFormat = d3.format(".0%");       // TODO
   var dollarFormat = d3.format("$");
+  
+  var yLabelText
+    , yTickFormat = dollarFormat;         // default is $
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1, 1);
@@ -90,15 +93,6 @@ $(function() {
 
   // ********** Meat of the chart rendering ************ //
   function renderData(data, svg, metricType, sectionType) {
-    // Setup some variables
-    var yLabelText, yTickFormat;
-    if (sectionType !== "price") {
-      yTickFormat = percentFormat;
-    } else {
-      yLabelText = "Price";
-      yTickFormat = dollarFormat;
-    }
-
     // Main Heading 
     var headingText;
     if (sectionType === "price") {
@@ -209,6 +203,7 @@ $(function() {
     yAxis.tickFormat(yTickFormat);
 
     svg.append("text")
+      .attr("id", "xLabelText")
       .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
       .attr("transform", "translate("+ (width/2) +","+(height + 100)+")")  // centre below axis
       .text("States")
@@ -219,9 +214,10 @@ $(function() {
         .call(yAxis)
 
     svg.append("text")
+        .attr("id", "yLabelText")
         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
         .attr("transform", "translate(-45" +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-        .text(yLabelText)
+        .text("Price")
         .style({"color": "white"});
 
     // Bars of the chart!
@@ -250,6 +246,22 @@ $(function() {
     // Update chart on click
     d3.selectAll(".clickable").on("click", function() {
       // Make sure all items are normal weight at the beginning
+
+      if (d3.select(this).node().parentNode.className === "price") {
+        yTickFormat = dollarFormat;
+        yLabelText = "Price";
+      } else if (d3.select(this).attr("class") === "clickable percentage") {
+        yTickFormat = function(d) {
+          return parseInt(d, 10) + "%";
+        };
+        yLabelText = this.innerText;
+      } else {
+        yTickFormat = d3.format("");
+        yLabelText = this.innerText;
+        // yLabelText = "";
+      }
+      d3.select("#yLabelText").text(yLabelText).style({"font-weight": "normal", "font-family": "Source Sans Pro"});
+
       d3.selectAll("li").style({"font-weight": "normal"});
       if (d3.event.defaultPrevented) {
         console.log("Click Supressed!!!");

@@ -127,6 +127,7 @@ text {
 #price, #booze, #liquor {
   font-family: PalatinoLinotype-Bold;
 }
+
 .clickable {
   font-family: Source Sans Pro;
   cursor: pointer;
