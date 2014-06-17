@@ -262,7 +262,7 @@ $(function() {
       }
       d3.select("#yLabelText").text(yLabelText).style({"font-weight": "normal", "font-family": "Source Sans Pro"});
 
-      d3.selectAll("li").style({"font-weight": "normal"});
+      d3.selectAll("li").style({"font-weight": "100"});
       if (d3.event.defaultPrevented) {
         console.log("Click Supressed!!!");
         return;
