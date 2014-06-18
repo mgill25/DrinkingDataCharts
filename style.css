@@ -121,7 +121,6 @@ h2, h3 {
 p { color: white; }
 
 #heading {
-  /* font-family: PalatinoLinotype-Bold; */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 36px;
   font-weight: 100;
@@ -174,6 +173,7 @@ text {
     width: 200px;
     margin-left: 50px;
     margin-right: 50px;
+    font-family: "Source Sans Pro";
   }
   
 }
@@ -183,6 +183,7 @@ text {
     font-size: 12px;
     width: 220px;
     margin-left: 50px;
+    font-family: "Source Sans Pro";
   }
 }
 
@@ -191,7 +192,8 @@ text {
     font-size: 12px;
     width: 220px;
     margin-left: 50px;
-  }  
+    font-family: "Source Sans Pro";
+  }
 }
 
 ul {

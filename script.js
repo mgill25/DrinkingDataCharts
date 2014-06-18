@@ -12,19 +12,6 @@ $(function() {
     .attr("height", sectionHeight)
     .style({"float": "left"});
 
-  console.log("sectionHeight: " + sectionHeight);
-  console.log("height: " + height);
-
-  // Ugly hack.
-  // Adjust graph height based on different section widths
-//  var windowHeight = $(window).height();
-//  if (windowHeight <= 612) {
-//    height = height + 500;
-//  } else {
-//    height = height + 600;
-//  }
-  console.log("new ht: " + height);
-
   var dollarFormat = d3.format("$")
     , prefix = "$"
     , postfix = "";
