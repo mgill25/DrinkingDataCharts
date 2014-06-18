@@ -1,51 +1,45 @@
 $(function() {
   var sectionWidth = $(document).width() - 270,
-      sectionHeight = $("#chart-section").height(),
-      margin = {top: 10, right: 20, bottom: 140, left: 100},
+      // sectionHeight = $("#chart-section").height(),
+      sectionHeight = $(document).height() - 43,
+      margin = {top: 10, right: 20, bottom: 240, left: 100},
       width = sectionWidth - margin.left - margin.right,
       height = sectionHeight - margin.top - margin.bottom;
 
   // Keep the SVG container to the right-side of the page!
-  d3.select("#chart-section").attr("width", sectionWidth).style({"float": "left"});
+  d3.select("#chart-section")
+    .attr("width", sectionWidth)
+    .attr("height", sectionHeight)
+    .style({"float": "left"});
+
+  console.log("sectionHeight: " + sectionHeight);
+  console.log("height: " + height);
 
   // Ugly hack.
   // Adjust graph height based on different section widths
-  var windowHeight = $(window).height();
-  if (windowHeight <= 612) {
-    height = height + 500;
-  } else {
-    height = height + 600;
-  }
-
-  // Adjust graph width based on different section widths
-  /*
-  if (sectionWidth < 1300 && sectionWidth > 1024) {
-    margin.left = margin.left - 100;
-    width = width + 50;
-  } else if (sectionWidth <= 1024) {
-    margin.left = margin.left - 150;
-    width = width + 100;
-  } else {
-    width = width - 150;
-  }
-
+//  var windowHeight = $(window).height();
+//  if (windowHeight <= 612) {
+//    height = height + 500;
+//  } else {
+//    height = height + 600;
+//  }
   console.log("new ht: " + height);
-  */
 
-  var percentFormat = d3.format(".0%");       // TODO
-  var dollarFormat = d3.format("$");
-  var prefix = "$", postfix = "";
+  var dollarFormat = d3.format("$")
+    , prefix = "$"
+    , postfix = "";
   
   var yLabelText
     , yTickFormat = dollarFormat;         // default is $
 
-  var transformWidth = margin.left + margin.right + 20;
+  var transformWidth = margin.left + margin.right + 20
+    , transformHeight = margin.top;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width - transformWidth], 0.1, 1);
 
   var y = d3.scale.linear()
-      .range([height, 0]);
+      .range([height - transformHeight, 0]);
 
   var xAxis = d3.svg.axis()
       .scale(x)
@@ -61,7 +55,7 @@ $(function() {
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var totalWidth = width + margin.left + margin.right
-      , totalHeight = height + margin.top + margin.bottom + 400;
+      , totalHeight = height + margin.top + margin.bottom;
 
     console.log("Total SVG width: " + totalWidth);
     console.log("Total SVG Height: " + totalHeight);
@@ -76,7 +70,7 @@ $(function() {
                 .attr("class", sectionType)
                 .attr("id", elementName)
                 .append("g")
-                  .attr("transform", "translate(" + transformWidth + "," + margin.top + ")");
+                  .attr("transform", "translate(" + transformWidth + "," + transformHeight + ")");
 
     return svg;
   }
@@ -101,10 +95,10 @@ $(function() {
         .attr("width", 15)
         .attr("height", 10)
         .style({"fill": "#2E86A5"})
-        .attr("transform", "translate(" + (width/2 - 40) + "," + (height + 180) + ")")
+        .attr("transform", "translate(" + (width/2 - 40) + "," + (height + 120) + ")")
       
     var label = svg.append("text")
-        .attr("transform", "translate(" + (width/2) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width/2) + "," + (height + 140) + ")")
         .text("Denver")
         .style({"color": "white"});
 
