@@ -1,24 +1,24 @@
 $(function() {
-  var margin = {top: 10, right: 80, bottom: 140, left: 250},
-      sectionWidth = $("#chart-section").width(),
+  var sectionWidth = $(document).width() - 270,
       sectionHeight = $("#chart-section").height(),
-      width = sectionWidth - margin.left - margin.right - 270,
-      height = sectionHeight - margin.top - margin.bottom;      // 895
+      margin = {top: 10, right: 20, bottom: 140, left: 100},
+      width = sectionWidth - margin.left - margin.right,
+      height = sectionHeight - margin.top - margin.bottom;
 
-  // console.log("sectionWidth: " + sectionWidth);
-  // console.log("oldwidth: " + width);
+  // Keep the SVG container to the right-side of the page!
+  d3.select("#chart-section").attr("width", sectionWidth).style({"float": "left"});
 
   // Ugly hack.
   // Adjust graph height based on different section widths
   var windowHeight = $(window).height();
   if (windowHeight <= 612) {
-    console.log("Yes it is");
     height = height + 500;
   } else {
     height = height + 600;
   }
 
   // Adjust graph width based on different section widths
+  /*
   if (sectionWidth < 1300 && sectionWidth > 1024) {
     margin.left = margin.left - 100;
     width = width + 50;
@@ -28,9 +28,9 @@ $(function() {
   } else {
     width = width - 150;
   }
-  // console.log("new width: " + width);
-  console.log("new ht: " + height);
 
+  console.log("new ht: " + height);
+  */
 
   var percentFormat = d3.format(".0%");       // TODO
   var dollarFormat = d3.format("$");
@@ -39,8 +39,10 @@ $(function() {
   var yLabelText
     , yTickFormat = dollarFormat;         // default is $
 
+  var transformWidth = margin.left + margin.right + 20;
+
   var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], 0.1, 1);
+      .rangeRoundBands([0, width - transformWidth], 0.1, 1);
 
   var y = d3.scale.linear()
       .range([height, 0]);
@@ -59,8 +61,10 @@ $(function() {
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var totalWidth = width + margin.left + margin.right
-      , totalHeight = height + margin.top + margin.bottom + 400
-      , transformWidth = margin.left + 100;
+      , totalHeight = height + margin.top + margin.bottom + 400;
+
+    console.log("Total SVG width: " + totalWidth);
+    console.log("Total SVG Height: " + totalHeight);
 
     var svg = d3.select("body")
                 .select("section")
