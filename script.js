@@ -56,19 +56,6 @@ $(function() {
 
   var toggle, sortTimeout;
 
-  var metricNameMap = {
-      "pi": "Price Index",
-      "di": "Drinkers Index",
-      "ai": "Accessibility Index",
-      "places_pc": "Drinking Places (per capita)",
-      "places": "Drinking Places",
-      "shops_pc": "Liquor Shops (per capita)",
-      "ge_one": "> 1 Drink",
-      "shops": "Number of Liqour Shops",
-      "bingers": "Binge Drinkers",
-      "heavy": "Heavy Drinkers"
-  }
-
   // Create the SVG element
   function createSVGElement(elementName, sectionType) {
     var totalWidth = width + margin.left + margin.right
